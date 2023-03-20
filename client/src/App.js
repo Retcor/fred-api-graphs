@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-const fetchTest = fetch('http://localhost:3001/fred/test').then(async res => console.log(await res.json()))
+const fetchTest = fetch('/api/fred/test').then(async res => console.log(await res.json()))
 
 function App() {
   return (
