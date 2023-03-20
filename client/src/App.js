@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
-const fetchTest = fetch('/api/fred/test').then(async res => console.log(await res.json()))
+export const SERVER_PREFIX = process.env.REACT_APP_API_PREFIX || 'http://localhost:3001'
+const fetchTest = fetch(`${SERVER_PREFIX}/fred/test`).then(async res => console.log(await res.json()))
 
 function App() {
   return (
