@@ -1,5 +1,9 @@
 .App {
-  text-align: center;
+  vertical-align: top;
+}
+
+.ChatGPTContent {
+  text-align: left;
 }
 
 .App-logo {
@@ -19,9 +23,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 45px;
 }
 
 .App-link {
@@ -35,4 +40,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.ChatGPT {
+  width: 50%;
+}
+
+.PromptHistory {
+  margin: 30px 0 0 0 !important;
+}
+
+.ReplyHistory > p {
+  margin: 0;
 }
