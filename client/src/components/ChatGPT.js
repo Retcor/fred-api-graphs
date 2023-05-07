@@ -10,10 +10,14 @@ export const ChatGPT = () => {
   const handleKeyDown = async (e) => {
     if (e.key === 'Enter') {
       setLoading(true)
-      const res = await fetch(`${SERVER_PREFIX}/chat/gpt/prompt?prompt=${e.target.value}`)
-      const reply = await res.text()
+      try {
+        const res = await fetch(`${SERVER_PREFIX}/chat/gpt/prompt?prompt=${e.target.value}`)
+        const reply = await res.text()
+        setChatGPTResponse([{prompt: e.target.value, reply}, ...chatGPTResponse])
+      } catch (e) {
+        console.log(e)
+      }
       setLoading(false)
-      setChatGPTResponse([{prompt: e.target.value, reply}, ...chatGPTResponse])
     }
   }
 

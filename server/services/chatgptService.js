@@ -1,7 +1,7 @@
 import { config } from 'dotenv'
 config();
 
-console.log('setting up chatgpt service')
+console.log('setting up chatgpt service.')
 import { Configuration, OpenAIApi } from 'openai'
 
 const openai = new OpenAIApi(
@@ -9,6 +9,7 @@ const openai = new OpenAIApi(
         apiKey: process.env.API_KEY,
     })
 )
+console.log(`set up OpenAIApi`)
 
 export const prompt = async input => {
     console.log(`prompting for content ${input}`)

@@ -9,7 +9,7 @@ const darkTheme = createTheme({
     },
 });
 
-export const SERVER_PREFIX = process.env.REACT_APP_API_PREFIX || 'http://localhost:3001'
+export const SERVER_PREFIX = process.env.REACT_APP_API_URL || process.env.REACT_APP_API_PREFIX || 'http://localhost:3001'
 
 function App() {
   return (
