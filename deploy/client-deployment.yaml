@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: gcr.io/avian-cable-379805/bakerrang-client:1.0.5
+        image: gcr.io/avian-cable-379805/bakerrang-client:1.0.6
         env:
         - name: REACT_APP_API_URL
           value: "http://34.106.65.248:80"

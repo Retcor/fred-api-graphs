@@ -20,3 +20,12 @@ The client will be ran with `npm docker` which sets the `REACT_APP_API_PREFIX` e
 
 Create a `.env` file in the server folder and place the following ENV variables:
 1. API_KEY: This is the api key for Chat GPT API
+
+## Deploy
+
+Build the image from either the server or client folder: `docker build -t gcr.io/<kubernetes-project-id>/<image-name>:<version> .`
+
+Push the image up to Google Registry. This requires access to the kubernetes project and gcloud authorization as well as
+docker config settings updated to communicate with that project: `docker push gcr.io/<kubernetes-project-id>/<image name>:<version>`
+
+Update either the client or api deployment file and then apply it to the cluster: `kubectl apply -f <deployment-yaml-filename>`
