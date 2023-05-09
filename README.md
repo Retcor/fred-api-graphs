@@ -23,9 +23,11 @@ Create a `.env` file in the server folder and place the following ENV variables:
 
 ## Deploy
 
-Build the image from either the server or client folder: `docker build -t gcr.io/<kubernetes-project-id>/<image-name>:<version> .`
+Initial deploy, `kubectl apply -f <yaml-filename>` for each file in ./deploy
+
+For changes, build the image from either the server or client folder: `docker build -t gcr.io/<kubernetes-project-id>/<image-name>:<version> .`
 
 Push the image up to Google Registry. This requires access to the kubernetes project and gcloud authorization as well as
 docker config settings updated to communicate with that project: `docker push gcr.io/<kubernetes-project-id>/<image name>:<version>`
 
-Update either the client or api deployment file and then apply it to the cluster: `kubectl apply -f <deployment-yaml-filename>`
+Update either the client or api deployment image file and then apply it to the cluster: `kubectl apply -f <deployment-yaml-filename>`

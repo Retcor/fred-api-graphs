@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {SERVER_PREFIX} from "../App";
-import {Grid, IconButton, LinearProgress, TextField, Typography} from "@mui/material";
+import {Grid, IconButton, CircularProgress, TextField, Typography} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {Clear, Send, StopCircle, VolumeUp} from "@mui/icons-material";
@@ -37,7 +37,7 @@ export const ChatGPT = () => {
     if (speaking) {
       cancel()
     } else {
-      speak({text: text})
+      speak({text: text, volume: 20})
     }
   }
 
@@ -62,16 +62,13 @@ export const ChatGPT = () => {
                   sx={{ visibility: value ? "visible" : "hidden" }}
                   onClick={getGPTResponse}
                 >
-                  <Send />
+                  {loading ? <CircularProgress color="success" size="1.5rem" /> : <Send />}
                 </IconButton>
               </>
             ),
           }}
         />
-        <br/>
-        <br/>
         <div>
-          {loading && <LinearProgress color="success"/>}
           {chatGPTResponse.map(res => {
             return (
               <>
