@@ -1,26 +1,32 @@
-import {useState} from "react";
-import {SERVER_PREFIX} from "../App";
-import {Grid, IconButton, CircularProgress, TextField, Typography} from "@mui/material";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import {Clear, Send, StopCircle, VolumeUp} from "@mui/icons-material";
-import {useSpeechSynthesis} from "react-speech-kit";
+import { useState } from 'react'
+import { SERVER_PREFIX } from '../App'
+import {
+  Grid,
+  IconButton,
+  CircularProgress,
+  TextField,
+  Typography
+} from '@mui/material'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { Clear, Send } from '@mui/icons-material'
+import { v4 } from 'uuid'
+import Player from './Player'
 
 export const ChatGPT = () => {
   const [chatGPTResponse, setChatGPTResponse] = useState([])
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState('')
-  const { speak, cancel, speaking } = useSpeechSynthesis()
+  const [prompt, setPrompt] = useState('')
   const handleClearClick = () => {
-    setValue('');
-  };
+    setPrompt('')
+  }
 
   const getGPTResponse = async () => {
     setLoading(true)
     try {
-      const res = await fetch(`${SERVER_PREFIX}/chat/gpt/prompt?prompt=${value}`)
+      const res = await fetch(`${SERVER_PREFIX}/chat/gpt/prompt?prompt=${prompt}`)
       const reply = await res.text()
-      setChatGPTResponse([{prompt: value, reply}, ...chatGPTResponse])
+      setChatGPTResponse([{ prompt, reply, id: v4() }, ...chatGPTResponse])
     } catch (ex) {
       console.log(ex)
     }
@@ -33,61 +39,51 @@ export const ChatGPT = () => {
     }
   }
 
-  const handleSpeak = (text) => {
-    if (speaking) {
-      cancel()
-    } else {
-      speak({text: text, volume: 20})
-    }
-  }
-
   return (
-    <div className="ChatGPT">
-      <div className="ChatGPTContent">
+    <div className='ChatGPT'>
+      <div className='ChatGPTContent'>
         <TextField
-          style={{width: '100%'}} label="What is it you wish?"
+          style={{ width: '100%' }} label='What is it you wish?'
           onKeyDown={handleKeyDown}
-          onChange={e => setValue(e.target.value)}
-          value={value}
+          onChange={e => setPrompt(e.target.value)}
+          value={prompt}
           InputProps={{
             endAdornment: (
               <>
                 <IconButton
-                  sx={{ visibility: value ? "visible" : "hidden" }}
+                  sx={{ visibility: prompt ? 'visible' : 'hidden' }}
                   onClick={handleClearClick}
                 >
                   <Clear />
                 </IconButton>
                 <IconButton
-                  sx={{ visibility: value ? "visible" : "hidden" }}
+                  sx={{ visibility: prompt ? 'visible' : 'hidden' }}
                   onClick={getGPTResponse}
                 >
-                  {loading ? <CircularProgress color="success" size="1.5rem" /> : <Send />}
+                  {loading ? <CircularProgress color='success' size='1.5rem' /> : <Send />}
                 </IconButton>
               </>
-            ),
+            )
           }}
         />
         <div>
           {chatGPTResponse.map(res => {
             return (
-              <>
-                <Typography sx={{ fontSize: 14 }} className="PromptHistory" color="text.secondary" gutterBottom>
+              <div key={res.id}>
+                <Typography key={res.id} sx={{ fontSize: 14 }} className='PromptHistory' color='text.secondary' gutterBottom>
                   {res.prompt}
                 </Typography>
-                <Grid container spacing={2} alignItems="flex-start">
-                  <Grid item style={{ width: '50px' }}>
-                    <IconButton onClick={() => handleSpeak(res.reply)}>
-                      {speaking ? <StopCircle/> : <VolumeUp />}
-                    </IconButton>
+                <Grid key={res.id} container spacing={2} alignItems='flex-start'>
+                  <Grid key={res.id} item style={{ width: '50px' }}>
+                    <Player key={res.id} text={res.reply} />
                   </Grid>
-                  <Grid item xs>
-                    <Typography sx={{ fontSize: 24 }} className="ReplyHistory" color="text.secondary" gutterBottom>
+                  <Grid key={res.id} item xs>
+                    <Typography sx={{ fontSize: 24 }} className='ReplyHistory' color='text.secondary' gutterBottom>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{res.reply}</ReactMarkdown>
                     </Typography>
                   </Grid>
                 </Grid>
-              </>
+              </div>
             )
           })}
         </div>
