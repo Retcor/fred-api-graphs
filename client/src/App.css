@@ -44,6 +44,8 @@
 .ChatGPT {
   width: 100%;
   max-width: 900px;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .PromptHistory {
@@ -56,4 +58,10 @@
 
 .HeaderBar {
   margin-bottom: 30px;
+}
+
+.HeaderBar > .MuiContainer-root {
+  max-width: 900px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
