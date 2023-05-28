@@ -67,25 +67,23 @@ export const ChatGPT = () => {
           }}
         />
         <div>
-          {chatGPTResponse.map(res => {
-            return (
-              <div key={res.id}>
-                <Typography key={res.id} sx={{ fontSize: 14 }} className='PromptHistory' color='text.secondary' gutterBottom>
-                  {res.prompt}
-                </Typography>
-                <Grid key={res.id} container spacing={2} alignItems='flex-start'>
-                  <Grid key={res.id} item style={{ width: '50px' }}>
-                    <Player key={res.id} text={res.reply} />
-                  </Grid>
-                  <Grid key={res.id} item xs>
-                    <Typography sx={{ fontSize: 24 }} className='ReplyHistory' color='text.secondary' gutterBottom>
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{res.reply}</ReactMarkdown>
-                    </Typography>
-                  </Grid>
+          {chatGPTResponse.map(res => (
+            <div key={res.id}>
+              <Typography key={res.id} sx={{ fontSize: 14 }} className='PromptHistory' color='text.secondary' gutterBottom>
+                {res.prompt}
+              </Typography>
+              <Grid key={res.id} container spacing={2} alignItems='flex-start'>
+                <Grid key={res.id} item style={{ width: '50px' }}>
+                  <Player key={res.id} text={res.reply} />
                 </Grid>
-              </div>
-            )
-          })}
+                <Grid key={res.id} item xs>
+                  <Typography sx={{ fontSize: 24 }} className='ReplyHistory' color='text.secondary' gutterBottom>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{res.reply}</ReactMarkdown>
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
+          ))}
         </div>
       </div>
     </div>

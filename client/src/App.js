@@ -2,6 +2,10 @@ import './App.css'
 import ChatGPT from './components/ChatGPT'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import HeaderBar from './components/HeaderBar'
+import NoPage from './components/NoPage'
+import ScratchPage from './components/ScratchPage'
+import { Route, Routes } from 'react-router-dom'
 
 const darkTheme = createTheme({
   palette: {
@@ -16,9 +20,14 @@ function App () {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <div className='App'>
-        <header className='App-header'>
-          <ChatGPT />
-        </header>
+        <HeaderBar />
+        <div className='App-content'>
+          <Routes>
+            <Route path='/' element={<ChatGPT />} />
+            <Route path='/scratch' element={<ScratchPage />} />
+            <Route path='*' element={<NoPage />} />
+          </Routes>
+        </div>
       </div>
     </ThemeProvider>
   )
