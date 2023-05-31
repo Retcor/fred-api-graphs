@@ -23,6 +23,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: client-loadbalancer
+            name: client-nodeport
             port:
               number: 80
