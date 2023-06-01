@@ -1,0 +1,28 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: bakerrang-api-certificate
+spec:
+  domains:
+    - api.bakerrang.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-bakerrang-ssl-ingress
+  annotations:
+    kubernetes.io/ingress.class: gce
+    networking.gke.io/managed-certificates: bakerrang-api-certificate
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+  - host: api.bakerrang.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
