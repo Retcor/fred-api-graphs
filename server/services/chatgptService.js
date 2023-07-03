@@ -1,7 +1,3 @@
-import { config } from 'dotenv'
-config();
-
-console.log('setting up chatgpt service.')
 import { Configuration, OpenAIApi } from 'openai'
 
 const openai = new OpenAIApi(
@@ -9,7 +5,6 @@ const openai = new OpenAIApi(
         apiKey: process.env.API_KEY,
     })
 )
-console.log(`set up OpenAIApi`)
 
 export const prompt = async input => {
     console.log(`prompting for content ${input}`)
@@ -20,4 +15,19 @@ export const prompt = async input => {
     const reply = res.data.choices[0].message.content
     console.log(reply)
     return reply
+}
+
+export const image = async input => {
+    console.log(`prompting for content ${input}`)
+    const res = await openai.createImage({
+        prompt: input,
+        n: 1,
+        size: "256x256",
+        response_format: "b64_json"
+    });
+    if (res.status === 200) {
+        return res?.data.data[0].b64_json || ''
+    } else {
+        return ''
+    }
 }

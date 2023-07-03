@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+import 'dotenv/config'
 import Debug from 'debug'
 const debug = Debug('server:server')
 import http from 'http'

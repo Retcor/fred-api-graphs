@@ -20,6 +20,8 @@ The client will be ran with `npm docker` which sets the `REACT_APP_API_PREFIX` e
 
 Create a `.env` file in the server folder and place the following ENV variables:
 1. API_KEY: This is the api key for Chat GPT API
+2. PLAY_HT_AUTH: Auth token to Play.ht account
+3. PLAY_HT_USER: User to Play.ht account
 
 ## Deploy
 

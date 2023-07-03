@@ -5,19 +5,25 @@ import {
   IconButton,
   CircularProgress,
   TextField,
-  Typography
+  Typography, Pagination
 } from '@mui/material'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Clear, Send } from '@mui/icons-material'
 import { v4 } from 'uuid'
+import AudioStreamPlayer from "./AudioStreamPlayer"
 
-export const ChatGPT = () => {
-  const [chatGPTResponse, setChatGPTResponse] = useState([])
+export const StoryBook = () => {
+  const [storyBookPages, setStoryBookPages] = useState([])
   const [loading, setLoading] = useState(false)
   const [prompt, setPrompt] = useState('')
+  const [page, setPage] = useState(1)
   const handleClearClick = () => {
     setPrompt('')
+  }
+
+  const handleChange = (event, value) => {
+    setPage(value);
   }
 
   const getGPTResponse = async () => {
@@ -25,7 +31,17 @@ export const ChatGPT = () => {
     try {
       const res = await fetch(`${SERVER_PREFIX}/chat/gpt/prompt?prompt=${prompt}`)
       const reply = await res.text()
-      setChatGPTResponse([{ prompt, reply, id: v4() }, ...chatGPTResponse])
+      const replyArr = reply.split('\n').filter(i => i)
+      const replyImgArr = await Promise.all(replyArr.map(async i => {
+        const imageRes = await fetch(`${SERVER_PREFIX}/chat/gpt/image/prompt?prompt=${i}`)
+        const image = await imageRes.text()
+        return {
+          id: v4(),
+          reply: i,
+          image
+        }
+      }))
+      setStoryBookPages(replyImgArr)
     } catch (ex) {
       console.log(ex)
     }
@@ -43,9 +59,9 @@ export const ChatGPT = () => {
       <div className='ChatGPTContent'>
         <TextField
           style={{ width: '100%' }}
-          label='What is it you wish?'
-          onKeyDown={handleKeyDown}
+          label='What story would you like to hear about today?'
           className='ChatGPTTextField'
+          onKeyDown={handleKeyDown}
           onChange={e => setPrompt(e.target.value)}
           value={prompt}
           InputProps={{
@@ -68,24 +84,30 @@ export const ChatGPT = () => {
           }}
         />
         <div>
-          {chatGPTResponse.map(res => (
-            <div key={res.id}>
-              <Typography key={res.id} sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
-                {res.prompt}
-              </Typography>
-              <Grid key={res.id} container spacing={1} alignItems='flex-start'>
-                <Grid key={res.id} item xs>
+          {storyBookPages.length > 0 && (
+            <div >
+              <Grid key={storyBookPages[page - 1].id} container spacing={3} alignItems='flex-start'>
+                <Grid key={storyBookPages[page - 1].id} item style={{ width: '50px' }}>
+                  <AudioStreamPlayer key={storyBookPages[page - 1].id} prompt={storyBookPages[page - 1].reply} />
+                </Grid>
+                <Grid key={storyBookPages[page - 1].id} item xs>
                   <Typography sx={{ fontSize: 24 }} className='ReplyHistory' color='text.secondary' gutterBottom>
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{res.reply}</ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{storyBookPages[page - 1].reply}</ReactMarkdown>
                   </Typography>
                 </Grid>
+                <Grid key={storyBookPages[page - 1].id} item style={{ width: '256px' }} className='DallEImg'>
+                  <img alt='No Image canneth be foundest' src={`data:image/png;base64,${storyBookPages[page - 1].image}`}/>
+                </Grid>
+              </Grid>
+              <Grid container spacing={1} alignItems='flex-start' justifyContent='center'>
+                <Pagination count={storyBookPages.length} page={page} onChange={handleChange} />
               </Grid>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>
   )
 }
 
-export default ChatGPT
+export default StoryBook

@@ -1,6 +1,5 @@
 .App {
   vertical-align: top;
-  background-color: #282c34;
   min-height: 100vh;
 }
 
@@ -48,8 +47,8 @@
   padding-left: 15px;
 }
 
-.PromptHistory {
-  margin: 30px 0 0 0 !important;
+.ChatGPTTextField {
+  margin: 0 0 30px 0 !important;
 }
 
 .ReplyHistory > p {
@@ -64,4 +63,8 @@
   max-width: 900px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.DallEImg {
+  padding-left: 0 !important;
 }

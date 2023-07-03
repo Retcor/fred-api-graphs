@@ -14,6 +14,7 @@ import logoBR from '../images/android-chrome-192x192.png'
 
 const pages = [
   { text: 'Chat', link: '/' },
+  { text: 'Story Book', link: '/storybook' },
   { text: 'Scratch', link: '/scratch' }
 ]
 

@@ -6,8 +6,9 @@ import cors from 'cors'
 
 import fredRouter from './routes/fred.js'
 import chatgptRouter from './routes/chatgpt.js'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import textToSpeechRouter from './routes/textToSpeech.js'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,5 +24,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/fred', fredRouter)
 app.use('/chat/gpt', chatgptRouter)
+app.use('/text/to/speech', textToSpeechRouter)
 
 export default app

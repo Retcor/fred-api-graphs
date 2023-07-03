@@ -6,6 +6,7 @@ import HeaderBar from './components/HeaderBar'
 import NoPage from './components/NoPage'
 import ScratchPage from './components/ScratchPage'
 import { Route, Routes } from 'react-router-dom'
+import StoryBook from "./components/StoryBook";
 
 const darkTheme = createTheme({
   palette: {
@@ -13,7 +14,7 @@ const darkTheme = createTheme({
   }
 })
 
-export const SERVER_PREFIX = process.env.REACT_APP_API_URL || process.env.REACT_APP_API_PREFIX || 'http://localhost:3001'
+export const SERVER_PREFIX = process.env.REACT_APP_API_URL || process.env.REACT_APP_API_PREFIX || `http://${window.location.hostname}:3001`
 
 function App () {
   return (
@@ -24,6 +25,7 @@ function App () {
         <div className='App-content'>
           <Routes>
             <Route path='/' element={<ChatGPT />} />
+            <Route path='/storybook' element={<StoryBook />} />
             <Route path='/scratch' element={<ScratchPage />} />
             <Route path='*' element={<NoPage />} />
           </Routes>
