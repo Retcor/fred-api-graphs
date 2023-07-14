@@ -7,6 +7,44 @@ const DAN_VOICE = 's3://voice-cloning-zero-shot/0f22b1b5-7ee8-4ad5-a553-9250fd89
 const ALICIA_VOICE = 's3://voice-cloning-zero-shot/98429117-4da4-4aaf-9aee-017c81ef40da/leeshie/manifest.json'
 const LITTLE_GUY_VOICE = 's3://voice-cloning-zero-shot/ff0e0869-64a4-48ed-8442-c5eb0782d27d/little-guy/manifest.json'
 const BOOBOO_VOICE = 's3://voice-cloning-zero-shot/366fb501-a799-4b4f-ab13-8f6ded52f9b6/booboo/manifest.json'
+const DAVEED_VOICE = 's3://voice-cloning-zero-shot/db6863d7-70c1-4479-8195-9eaee7365d7a/daveed/manifest.json'
+const KAIUUHH_VOICE = 's3://voice-cloning-zero-shot/e4c22af0-dedf-4059-89b7-5e6e095acd9b/kaiuuuhh/manifest.json'
+const CARUUHH_VOICE = 's3://voice-cloning-zero-shot/8828acd3-5824-4667-a7f8-6c3f82718578/caruuhh/manifest.json'
+const CARTERMAN_VOICE = 's3://voice-cloning-zero-shot/189d5919-bfb6-42ac-a890-2db4421fb395/carterman/manifest.json'
+const VOICE_MAP = [
+  {
+    id: DAN_VOICE,
+    name: 'Dan'
+  },
+  {
+    id: ALICIA_VOICE,
+    name: 'Alicia'
+  },
+  {
+    id: LITTLE_GUY_VOICE,
+    name: 'Little Guy'
+  },
+  {
+    id: BOOBOO_VOICE,
+    name: 'Booboo'
+  },
+  {
+    id: DAVEED_VOICE,
+    name: 'Daveed'
+  },
+  {
+    id: KAIUUHH_VOICE,
+    name: 'Kaiuuhh'
+  },
+  {
+    id: CARUUHH_VOICE,
+    name: 'Caruuhh'
+  },
+  {
+    id: CARTERMAN_VOICE,
+    name: 'Carterman'
+  }
+]
 
 const AudioStreamPlayer = ({ prompt }) => {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -88,18 +126,13 @@ const AudioStreamPlayer = ({ prompt }) => {
         }}
       >
         <List>
-          <ListItemButton onClick={() => handleVoiceSelect(DAN_VOICE)}>
-            <ListItemText primary="Dan" />
-          </ListItemButton>
-          <ListItemButton onClick={() => handleVoiceSelect(ALICIA_VOICE)}>
-            <ListItemText primary="Alicia" />
-          </ListItemButton>
-          <ListItemButton onClick={() => handleVoiceSelect(LITTLE_GUY_VOICE)}>
-            <ListItemText primary="Little Guy" />
-          </ListItemButton>
-          <ListItemButton onClick={() => handleVoiceSelect(BOOBOO_VOICE)}>
-            <ListItemText primary="Booboo" />
-          </ListItemButton>
+          {
+            VOICE_MAP.map(voice => (
+              <ListItemButton onClick={() => handleVoiceSelect(voice.id)}>
+                <ListItemText primary={voice.name} />
+              </ListItemButton>
+            ))
+          }
         </List>
       </Popover>
     </div>
