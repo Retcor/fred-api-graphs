@@ -22,7 +22,7 @@ export const v1ConvertTextToSpeech = async (input, voice = 'larry') => {
     return response.data
 }
 
-export const v1GetTextToSpeech = async (transcriptionId) => {
+export const v1GetTextToSpeech = async (transcriptionId, triesLeft = 30) => {
     const url = `https://play.ht/api/v1/articleStatus/?transcriptionId=${transcriptionId}`;
     const options = {
         method: 'GET',
@@ -35,9 +35,15 @@ export const v1GetTextToSpeech = async (transcriptionId) => {
 
     const response = await axios(url, options)
     if (!response.data.transcriped) {
-        await new Promise(resolve => setTimeout(resolve, 500))
-        return v1GetTextToSpeech(transcriptionId)
+        if (triesLeft < 0) {
+            throw new Error('Timed out waiting to transcribe')
+        }
+        triesLeft--
+        console.log(`Voice not yet transcriped for ${transcriptionId}, retrying...`)
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        return v1GetTextToSpeech(transcriptionId, triesLeft)
     }
+    console.log(`Voice transcriped successfully for ${transcriptionId}`)
     return await response.data
 }
 

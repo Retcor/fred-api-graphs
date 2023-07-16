@@ -26,4 +26,12 @@ app.use('/fred', fredRouter)
 app.use('/chat/gpt', chatgptRouter)
 app.use('/text/to/speech', textToSpeechRouter)
 
+app.get('/health', (req, res) => {
+  res.status(200).send('Healthy');
+})
+
+app.get('/', (req, res) => {
+  res.status(200).send('Healthy');
+})
+
 export default app

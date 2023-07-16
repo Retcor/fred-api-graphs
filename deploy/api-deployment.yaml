@@ -14,7 +14,24 @@ spec:
     spec:
       containers:
       - name: api
-        image: gcr.io/avian-cable-379805/bakerrang-api:1.0.3
+        image: gcr.io/avian-cable-379805/bakerrang-api:1.0.8
+        resources:
+          limits:
+            cpu: "0.2"
+          requests:
+            cpu: "0.05"
         ports:
         - containerPort: 3001
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 30
+          periodSeconds: 30
 

@@ -15,8 +15,8 @@ router.get('/v1/convert', async (req, res, next) => {
 
         res.send(getRes.audioUrl[0])
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('Internal Server Error');
+        console.error(error);
+        res.status(500).send(error);
     }
 });
 

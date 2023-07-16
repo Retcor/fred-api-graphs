@@ -15,6 +15,11 @@ spec:
       containers:
       - name: client
         image: gcr.io/avian-cable-379805/bakerrang-client:1.0.12
+        resources:
+          limits:
+            cpu: "0.2"
+          requests:
+            cpu: "0.05"
         env:
         - name: REACT_APP_API_URL
           value: "https://api.bakerrang.com"
